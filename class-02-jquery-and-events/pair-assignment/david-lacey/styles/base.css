@@ -1,21 +1,26 @@
-/* TODO: Add some coordinated colors to make the blog more distinguished:
+/* DONE: Add some coordinated colors to make the blog more distinguished:
          Use an accent color for all links, and remove their underline. */
 
 body {
   line-height: 1.5;
   font-size: 100%;
   color: #313131;
+  background-color: #D6D6D6;
 }
 
 hr {
   margin: 1em;
   width: 80%;
 }
-
+/*
 ul {
   list-style: none;
-}
+}*/
 
+
+a:link{
+  text-decoration: none;
+}
 /*TEXT STYLES
 =======================================*/
 p {
@@ -30,7 +35,7 @@ address {
 =======================================*/
 
 a, a:link, a:active {
-  color: #777;
+  color: #2F5785;
 }
 
 a:hover, a:focus {
