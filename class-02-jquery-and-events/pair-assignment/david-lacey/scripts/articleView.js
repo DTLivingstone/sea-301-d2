@@ -32,15 +32,16 @@ articleView.handleAuthorFilter = function() {
       console.log(this.value)
       $('article').hide();
       var author = this.value;
-      $('article').filter("[data-attribute = '"+ author +"']").show();
+      $('article').filter("[data-attribute = '"+ author +"']").fadeIn(1500);
 
-      // TODO: If the select box was changed to an option that has a value, we need to hide all the articles,
+      // DONE: If the select box was changed to an option that has a value, we need to hide all the articles,
       //       and then show just the ones that match for the author that was selected.
       //       Use an "attribute selector" to find those articles, and fade them in for the reader.
 
     } else {
       // TODO: If the select box was changed to an option that is blank, we should
       //       show all the articles, except the one article we are using as a template.
+      $('article').not('.template').show();
 
     }
     $('#category-filter').val('');
@@ -48,6 +49,8 @@ articleView.handleAuthorFilter = function() {
 };
 
 articleView.handleCategoryFilter = function() {
+
+  
   // TODO: Just like we do for #author-filter above, we should handle change events on the #category-filter element.
   //       When an option with a value is selected, hide all the articles, then reveal the matches.
   //       When the blank (default) option is selected, show all the articles, except for the template.
