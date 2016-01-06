@@ -17,22 +17,28 @@
   padding: 0.1em;
 }
 
-.main-nav ul {
-  display: none;
-  padding: 0;
-  list-style: none;
-  clear: both;
-}
-
 .main-nav:hover ul {
   display: block;
 }
 
 .main-nav li {
+  display: inline;
   margin-right: .4em;
   font-size: 1.5em;
   padding: .5em .2em;
   border-bottom: 1px solid #ccc;
+}
+
+.main-nav ul {
+  display: block;
+  padding: 0;
+  list-style: none;
+  clear: both;
+}
+
+.hamburger-box {
+  max-width: 30px;
+  display: inline-block;
 }
 
 #filters {
@@ -58,3 +64,19 @@
          - Main should be all on one row, with padding spaced better for a larger screen.
          - Just, ya know, try to make it look good! */
 /* @media only screen... */
+
+.hamburger {
+  display: none;
+}
+
+@media only screen and (max-width: 640px) {
+  .hamburger {
+    display: block;
+  }
+  .main-nav ul {
+    display: none;
+  }
+  .main-nav li {
+    display: block;
+  }
+}
