@@ -29,10 +29,14 @@ articleView.populateFilters = function() {
 articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
     if ($(this).val()) {
+      console.log(this.value)
+      $('article').hide();
+      var author = this.value;
+      $('article').filter("[data-attribute = '"+ author +"']").show();
+
       // TODO: If the select box was changed to an option that has a value, we need to hide all the articles,
       //       and then show just the ones that match for the author that was selected.
       //       Use an "attribute selector" to find those articles, and fade them in for the reader.
-      $('article').attr('data-attribute').not()
 
     } else {
       // TODO: If the select box was changed to an option that is blank, we should
