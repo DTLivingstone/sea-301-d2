@@ -45,18 +45,50 @@ Article.loadAll = function(rawData) {
 // and process it, then hand off control to the View.
 Article.fetchAll = function() {
   if (localStorage.rawData) {
-    // When rawData is already in localStorage,
-    // we can load it with the .loadAll function above,
-    // and then render the index page (using the proper method on the articleView object).
-    Article.loadAll(//TODO: What do we pass in here to the .loadAll function?
-    );
-    articleView.someFunctionToCall; //TODO: What method do we call to render the index page?
-  } else {
-    // TODO: When we don't already have the rawData,
-    // we need to retrieve the JSON file from the server with AJAX (which jQuery method is best for this?),
-    // cache it in localStorage so we can skip the server call next time,
-    // then load all the data into Article.all with the .loadAll function above,
-    // and then render the index page.
+    $.ajax({
+      url: '/data/hackerIpsum.json',
+      Type: 'HEAD',
+      success: function(data, message, xhr) {
+        var getETag = xhr.getResponseHeader('ETag');
+        console.log(getETag);
+        console.log(JSON.parse(localStorage.savedETag));
+        if(getETag === JSON.parse(localStorage.savedETag)) {
+          console.log('same tho');
+          articleView.initIndexPage();
+        }else{
+          console.log('different etag');
+          Article.loadAll(JSON.parse(localStorage.rawData));
+          localStorage.savedETag = JSON.stringify(xhr.getResponseHeader('ETag'));
+          articleView.initIndexPage(); //DONE: What method do we call to render the index page?
+        }
+      }
+    });
 
+    // Article.loadAll(JSON.parse(localStorage.rawData));
+    // articleView.initIndexPage(); //DONE: What method do we call to render the index page?
+  } else {
+    console.log('you are in line 63');
+    $.ajax({
+      url: '/data/hackerIpsum.json',
+      Type: 'HEAD',
+      dataType: 'json',
+      success: function(rawData, message, xhr){
+        console.log('success!');
+        Article.loadAll(rawData);
+        localStorage.rawData = JSON.stringify(rawData);
+        articleView.initIndexPage();
+        localStorage.savedETag = JSON.stringify(xhr.getResponseHeader('ETag'));
+        console.log(localStorage.savedETag);
+      },
+      error: function(){
+        console.log('fuck');
+      }
+    });
+
+      // DONE: When we don't already have the rawData,
+      // we need to retrieve the JSON file from the server with AJAX (which jQuery method is best for this?),
+      // cache it in localStorage so we can skip the server call next time,
+      // then load all the data into Article.all with the .loadAll function above,
+      // and then render the index page.
   }
 }
