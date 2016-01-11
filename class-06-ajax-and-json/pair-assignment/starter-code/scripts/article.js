@@ -50,13 +50,9 @@ Article.fetchAll = function() {
       Type: 'HEAD',
       success: function(data, message, xhr) {
         var getETag = xhr.getResponseHeader('ETag');
-        console.log(getETag);
-        console.log(JSON.parse(localStorage.savedETag));
         if(getETag === JSON.parse(localStorage.savedETag)) {
-          console.log('same tho');
           articleView.initIndexPage();
         }else{
-          console.log('different etag');
           Article.loadAll(JSON.parse(localStorage.rawData));
           localStorage.savedETag = JSON.stringify(xhr.getResponseHeader('ETag'));
           articleView.initIndexPage(); //DONE: What method do we call to render the index page?
@@ -67,18 +63,15 @@ Article.fetchAll = function() {
     // Article.loadAll(JSON.parse(localStorage.rawData));
     // articleView.initIndexPage(); //DONE: What method do we call to render the index page?
   } else {
-    console.log('you are in line 63');
     $.ajax({
       url: '/data/hackerIpsum.json',
       Type: 'HEAD',
       dataType: 'json',
       success: function(rawData, message, xhr){
-        console.log('success!');
         Article.loadAll(rawData);
         localStorage.rawData = JSON.stringify(rawData);
         articleView.initIndexPage();
         localStorage.savedETag = JSON.stringify(xhr.getResponseHeader('ETag'));
-        console.log(localStorage.savedETag);
       },
       error: function(){
         console.log('fuck');
